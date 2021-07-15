@@ -111,6 +111,12 @@
             <artifactId>hutool-all</artifactId>
             <version>5.3.5</version>
         </dependency>
+        <!-- Json -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.70</version>
+        </dependency>
 
     </dependencies>
 
