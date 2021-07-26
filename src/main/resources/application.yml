@@ -1,62 +1,8 @@
-server:
-  port: 8089
-  # sesion超时时间
-  servlet:
-    context-path: /spring-demo
-    session:
-      timeout: 30m
-
-
-thread:
-  pool:
-    core-size: 30
-    max-size: 100
-    queue-capacity: 500
-    keep-alive-seconds: 60
-    name-prefix: async-service-
-
 spring:
-  session:
-    store-type: redis
-    redis:
-      flush-mode: on_save
-      namespace: spring:session
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/mysql_demo?characterEncoding=utf8&useSSL=false&serverTimezone=UTC&rewriteBatchedStatements=true
-    username: root
-    password: root
-
-  # 防止乱码
-  http:
-    encoding:
-      charset: utf-8
-      force: true
-      enabled: true
-
-  #redis配置
-  redis:
-    port: 6379
-    host: 127.0.0.1
-    database: 0
-    lettuce:
-      pool:
-        # 连接池最大连接数默认为8，负数代表不限制
-        max-active: 8
-        # 连接池最大阻塞等待时间(使用负值表示没有限制) 默认为-1
-        max-wait: -1ms
-        # 连接池中的最大空闲连接 默认为8
-        max-idle: 8
-        # 连接池中的最小空闲连接 默认为 0
-        min-idle: 0
-
-  #mongodb配置
-  data:
-    mongodb:
-      host: 127.0.0.1
-      port: 27017
-      database: mongo_demo
-
-#enable swagger
-swagger:
-  enabled: true
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      discovery:
+        group: dev
+        namespace: dev

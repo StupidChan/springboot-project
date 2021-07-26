@@ -28,34 +28,21 @@ public class TestDemo {
 
     @Test
     public void test(){
-        System.out.println(DateUtil.date());
+        Integer[] intArr = new Integer[]{1,2,3,4,5};
+        Double[] doubleArr = new Double[]{6.0,7.1,8.2,9.3};
+        String[] stringArr = new String[]{"str1","str2","str3",};
 
-        List<GroupList> groupLists = new ArrayList<>();
-        GroupList gl1 = new GroupList("aabb","dev","type1",1);
-        GroupList gl2 = new GroupList("aabb","dev","type2",2);
-        GroupList gl3 = new GroupList("aabb","dev","type2",1);
-        GroupList gl4 = new GroupList("bbcc","dev","type3",3);
-        GroupList gl5 = new GroupList("bbcc","dev","type3",6);
-        GroupList gl6 = new GroupList("aabb","prod","type3",5);
-        GroupList gl7 = new GroupList("aabb","prod","type3",1);
-        GroupList gl8 = new GroupList("bbcc","prod","type1",4);
-        GroupList gl9 = new GroupList("bbcc","prod","type1",7);
-        GroupList gl10 = new GroupList("ccdd","prod","type1",1);
-        groupLists.add(gl1);groupLists.add(gl2);groupLists.add(gl3);groupLists.add(gl4);groupLists.add(gl5);
-        groupLists.add(gl6);groupLists.add(gl7);groupLists.add(gl8);groupLists.add(gl9);groupLists.add(gl10);
 
-        Map<String, Map<String, Map<String, List<GroupList>>>> groupMap =
-                groupLists.stream().collect(
-                        Collectors.groupingBy(GroupList::getApp,
-                                Collectors.groupingBy(GroupList::getEnv,Collectors.groupingBy(GroupList::getDataType))));
+        printArr(intArr);
+        printArr(doubleArr);
+        printArr(stringArr);
+    }
 
-        List<String> apps = groupLists.stream().map(GroupList::getApp).collect(Collectors.toList());
-        List<String> envs = groupLists.stream().map(GroupList::getEnv).collect(Collectors.toList());
-        List<String> types = groupLists.stream().map(GroupList::getDataType).collect(Collectors.toList());
-
-        System.out.println(JSON.toJSONString(groupMap));
-        System.out.println(DateUtil.date());
-
+    public static<T> void printArr(T[] objArr){
+        for(int i=0; i< objArr.length; i++){
+            System.out.print(objArr[i] + "  ");
+        }
+        System.out.println();
     }
 
     @Data

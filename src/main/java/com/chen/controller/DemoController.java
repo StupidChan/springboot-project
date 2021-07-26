@@ -1,5 +1,6 @@
 package com.chen.controller;
 
+import cn.hutool.core.date.DateUtil;
 import com.chen.entity.DemoEntity;
 import com.chen.mapper.DemoMapper;
 import com.chen.mongoBean.DemoBean;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.Date;
 
 @Api(description  = "测试接口")
 @RestController
@@ -29,7 +31,7 @@ public class DemoController {
         DemoEntity demoEntity = new DemoEntity();
         demoEntity.setHouseNum("4-902");
         demoEntity.setAddress("chengxi");
-        demoEntity.setCheckInTime("2020-07-12");
+        demoEntity.setCheckInTime(DateUtil.formatDate(new Date()));
         demoMapper.insert(demoEntity);
         return "OK";
     }
@@ -37,7 +39,7 @@ public class DemoController {
     @ApiOperation(value = "redis保存")
     @PostMapping("/redisSave")
     public String redisSave(){
-        stringRedisTemplate.opsForValue().set("demo","demo-value");
+        stringRedisTemplate.opsForValue().set("demo", DateUtil.formatDate(new Date()));
         return "OK";
     }
 
@@ -47,7 +49,7 @@ public class DemoController {
         DemoBean demoBean = new DemoBean();
         demoBean.setHouseNum("4-902");
         demoBean.setAddress("chengxi");
-        demoBean.setCheckInTime("2020-07-12");
+        demoBean.setCheckInTime(DateUtil.formatDate(new Date()));
 
         mongoTemplate.save(demoBean,"data_home");
         return "OK";
