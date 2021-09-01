@@ -97,7 +97,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
         </dependency>
-        <!-- shutool工具包 -->
+        <!-- hutool工具包 -->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
@@ -125,7 +125,12 @@
             <artifactId>nacos-client</artifactId>
             <version>1.2.1</version>
         </dependency>
-
+        <!--c3p0-->
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5.2</version>
+        </dependency>
     </dependencies>
 
     <!--alibaba cloud 相关依赖管理-->
