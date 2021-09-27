@@ -1,12 +1,16 @@
 package com.chen.controller;
 
+import ch.qos.logback.classic.Logger;
 import cn.hutool.core.date.DateUtil;
 import com.chen.entity.DemoEntity;
 import com.chen.mapper.DemoMapper;
 import com.chen.mongoBean.DemoBean;
 import com.chen.utils.C3p0Utils;
+import com.chen.utils.LogFileName;
+import com.chen.utils.LoggerUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +31,10 @@ public class DemoController {
     @Resource
     private MongoTemplate mongoTemplate;
 
+    private final static Logger logger = (Logger) LoggerFactory.getLogger(DemoController.class);
+    private static final Logger sys_Log = (Logger) LoggerUtils.Logger(LogFileName.SYS_LOG);
+    private static final Logger biz_Log = (Logger) LoggerUtils.Logger(LogFileName.BIZ_LOG);
+
     @ApiOperation(value = "mysql保存")
     @PostMapping("/mysqlSave")
     public String mysqlSave(){
@@ -35,6 +43,11 @@ public class DemoController {
         demoEntity.setAddress("chengxi");
         demoEntity.setCheckInTime(DateUtil.formatDate(new Date()));
         demoMapper.insert(demoEntity);
+
+        logger.info("我是$$$$$$$$$$$$$$$$$$$$$");
+        sys_Log.info("我是系统日志");
+        biz_Log.info("我是业务日志");
+
         return "OK";
     }
 

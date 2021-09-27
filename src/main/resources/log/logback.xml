@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 日志级别从低到高分为TRACE < DEBUG < INFO < WARN < ERROR < FATAL，如果设置为WARN，则低于WARN的信息都不会输出 -->
+<!-- scan:当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true -->
+<!-- scanPeriod:设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟。 -->
+<!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
+<configuration scan="true" scanPeriod="10 seconds">
+
+    <contextName>logback</contextName>
+
+    <!--读取配置中心的属性-->
+    <!-- <springProperty scope="context" name="logpath" source="logging.path"/>-->
+
+    <!-- name的值是变量的名称，value的值时变量定义的值。通过定义的值会被插入到logger上下文中。定义变量后，可以使“${}”来使用变量。 -->
+    <property name="LogProjectName" value="springboot-project"/>
+    <property name="LOG_PATH" value="logger/${LogProjectName}"/>
+
+    <property name="Log_Pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] [%5level] %logger:%L ==> %msg%n"/>
+    <property name="Log_Pattern_LL" value="%blue(%d{yyyy-MM-dd HH:mm:ss}) [%thread] [%5level] %green(%logger:%L) ==> %msg%n"/>
+
+
+
+
+
+    <!--输出到控制台-->
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,%-5level:级别从左显示5个字符宽度,%msg:日志消息,%i索引【从数字0开始递增】 -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${Log_Pattern_LL}</Pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- 此日志文件只记录DEBUG级别的 -->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <!-- 在控制台中允许输出的日志级别 -->
+            <level>DEBUG</level>
+        </filter>
+    </appender>
+
+
+
+    <!--输出到文件-->
+    <!-- 时间滚动输出 level为全部日志 -->
+    <appender name="runtime" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>${Log_Pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <!-- 日志记录器的滚动策略，按日期，按大小记录 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 日志归档 后面可以加.zip-->
+            <fileNamePattern>${LOG_PATH}/runtime/${LogProjectName}-runtime-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--日志文件保留天数-->
+            <maxHistory>10</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--文件达到最大时会被压缩和切割 -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+    </appender>
+
+
+
+    <!--时间滚动输出 level为 ERROR 日志 -->
+    <appender name="error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--日志文件输出格式-->
+        <encoder>
+            <pattern>${Log_Pattern}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_PATH}/error/${LogProjectName}-error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!--日志文件保留天数-->
+            <maxHistory>10</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--文件达到最大时会被压缩和切割 -->
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+        <!-- 此日志文件只记录ERROR级别的 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+
+    </appender>
+
+
+
+
+
+
+
+    <!--开发环境:打印控制台-->
+    <springProfile name="dev">
+        <!-- <logger>不受<root>的日志级别限制，<logger>受<appender>的日志级别控制 -->
+        <!-- additivity：是否向上级loger传递打印信息，默认是true-->
+        <logger name="org.collect.mapper" level="debug" additivity="true"/>
+
+        <!--    additivity="true"表示追加日志到ref="console"，日志可能会重复打印，谨慎使用  -->
+        <!--    <logger name="org.collect.mapper" level="debug" additivity="false">-->
+        <!--        <appender-ref ref="console"/>-->
+        <!--    </logger>-->
+
+        <!-- 控制全局日志输出级别。<root>限制<appender>的日志级别 -->
+        <root level="info">
+            <appender-ref ref="console"/>
+            <appender-ref ref="runtime"/>
+
+
+
+
+            <appender-ref ref="error"/>
+        </root>
+    </springProfile>
+
+
+
+    <!--生产环境:输出到文件-->
+    <springProfile name="pro">
+        <root level="INFO">
+            <appender-ref ref="runtime"/>
+            <appender-ref ref="error"/>
+        </root>
+    </springProfile>
+
+
+
+
+</configuration>
