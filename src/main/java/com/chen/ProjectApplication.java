@@ -16,6 +16,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 public class ProjectApplication {
 
     public static void main(String[] args) {
+        System.setProperty("nacos.logging.default.config.enabled","false");
         SpringApplication.run(ProjectApplication.class, args);
         System.out.println("加载完成");
     }

@@ -1,4 +1,4 @@
-package com.chen.entity;
+package com.chen.mysqlEntity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;

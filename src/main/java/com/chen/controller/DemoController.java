@@ -2,9 +2,10 @@ package com.chen.controller;
 
 import ch.qos.logback.classic.Logger;
 import cn.hutool.core.date.DateUtil;
-import com.chen.entity.DemoEntity;
+import com.chen.mysqlEntity.DemoEntity;
 import com.chen.mapper.DemoMapper;
 import com.chen.mongoBean.DemoBean;
+import com.chen.mongoBean.ScheduleBean;
 import com.chen.utils.C3p0Utils;
 import com.chen.utils.LogFileName;
 import com.chen.utils.LoggerUtils;
@@ -14,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -94,6 +96,19 @@ public class DemoController {
             C3p0Utils.close(connection,statement);
         }
 
+        return "OK";
+    }
+
+    @ApiOperation(value = "mongo保存定时任务表")
+    @PostMapping("/saveSchedule")
+    public String saveSchedule(@RequestBody ScheduleBean scheduleBean){
+        mongoTemplate.save(scheduleBean,"tb_schedule");
+        return "OK";
+    }
+
+    @ApiOperation(value = "单纯测试")
+    @PostMapping("/onlyTest")
+    public String onlyTest(){
         return "OK";
     }
 
