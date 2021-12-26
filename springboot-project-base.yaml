@@ -1,0 +1,23 @@
+# nacos配置文件
+server:
+  port: 8099
+  servlet:
+    context-path: /spring-demo
+    session:
+      timeout: 30m
+      
+#enable swagger
+swagger:
+  enabled: true
+
+management:
+  health:
+    elasticsearch:
+      enabled: false
+
+logging:
+  config: classpath:log/logback.xml 
+  #level:
+   # com.alibaba.nacos.client.config.impl: WARN
+
+
