@@ -31,8 +31,10 @@ public class TestController {
         Integer num2 = 0;
         CompletableFuture<List<String>> future1 = CompletableFuture.supplyAsync(() -> creatList(5));
         CompletableFuture<Integer> future2 = CompletableFuture.supplyAsync(() -> creatInteger(5));
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS") .format(new Date()));
         list2 = future1.get();
         num2 = future2.get();
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:SSS") .format(new Date()));
 
         map.put("list2",list2);
         map.put("num2",num2);

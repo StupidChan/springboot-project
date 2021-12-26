@@ -21,20 +21,20 @@ public class SchedulingRunnable implements Runnable {
 
     @Override
     public void run() {
-        logger.info("定时任务开始执行 - app：{}，env：{}", app, env);
-        long startTime = System.currentTimeMillis();
-
-        try {
-
-            //具体定时业务
-            System.out.println(DateUtil.format(new Date(),"yyyy-MM-dd HH:mm:ss") + " 执行定时任务 " + app + "、" + env);
-
-        } catch (Exception ex) {
-            logger.error(String.format("定时任务执行异常 - bean：%s，方法：%s", app, env), ex);
-        }
-
-        long times = System.currentTimeMillis() - startTime;
-        logger.info("定时任务执行结束 - bean：{}，方法：{}，耗时：{} 毫秒", app, env, times);
+//        logger.info("定时任务开始执行 - app：{}，env：{}", app, env);
+//        long startTime = System.currentTimeMillis();
+//
+//        try {
+//
+//            //具体定时业务
+//            System.out.println(DateUtil.format(new Date(),"yyyy-MM-dd HH:mm:ss") + " 执行定时任务 " + app + "、" + env);
+//
+//        } catch (Exception ex) {
+//            logger.error(String.format("定时任务执行异常 - bean：%s，方法：%s", app, env), ex);
+//        }
+//
+//        long times = System.currentTimeMillis() - startTime;
+//        logger.info("定时任务执行结束 - bean：{}，方法：{}，耗时：{} 毫秒", app, env, times);
     }
 
 }
